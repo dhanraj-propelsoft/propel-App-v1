@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
 import 'package:propel_login/EmailScreen.dart';
+import 'package:propel_login/PasswordScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,30 +28,43 @@ class _LoginScreenState extends State<LoginScreen> {
     bool isValidPhone = RegExp(r'^\d{10}$').hasMatch(phone);
     setState(() {
       _isButtonDisabled = !isValidPhone;
-    });
-  }
+    });}
   Future<void> PhoneNumber(phoneNumber) async {
     var data = {
       'mobileNumber':phoneNumber,
     };
-
-    print("<___________________Input mobile No Api __________________________>");
-    print(data);
+    if (kDebugMode) {
+      print("<___________________Input mobile No Api __________________________>");
+    }
+    // if (kDebugMode) {
+    //   print(data);
+    // }
     var response1 = await CallApi().postData("findMobileNumber",data);
     var body  = jsonDecode(response1.body);
 
-    print("<___________________Output mobile No Api __________________________>");
-    print(body);
-    if(body['success'] ==true){
+    if (kDebugMode) {
+      print("<___________________Output mobile No Api __________________________>");
+    }
+    if (kDebugMode) {
+      print(body);
+    }
+    if (body['success'] == true) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('mobileNumber', phoneNumber);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (ctx) => const EmailScreen()));
-      _clearTextField();
+      var type = body['data']['type'];
+      if (type == 0) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (ctx) => const EmailScreen()),
+        );
+        _clearTextField();
+      } else if (type == 1) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (ctx) => const PasswordScreen()),
+        );
+        _clearTextField();
+      }
     }
-
     return;
-
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -77,7 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // String phone = _phoneController.text;
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         key: _formKey,
         children: [
           const Padding(padding: EdgeInsets.only(top: 50)),
@@ -120,14 +136,51 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SizedBox(
               width: 350,
               child: TextField(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      Future.delayed(const Duration(seconds: 1), () {
+                        Navigator.pop(context);
+                      });
+
+                      return AlertDialog(
+                        content: GestureDetector(
+                          child: const Text(
+                            'Currently we are available only in India',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 14,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
+                  );
+                  _focusNode.requestFocus();
+                },
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                    enabled: false,
-                    prefix: const Text(
-                      '+91',
+                    prefixIcon: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          '+91',
+                        ),
+                        Icon(Icons.arrow_drop_down),
+                      ],
                     ),
-                    prefixIcon: const Icon(Icons.arrow_drop_down),
+                    // enabled: false,
                     hintText: 'India',
+                    hintStyle: const TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 14
+                    ),
                     suffixIcon: Image.network(
                       'https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463__340.png',
                       width: 15,
@@ -154,7 +207,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: _showLabel ? 'Mobile Number *' : null,
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
+                        borderRadius: BorderRadius.circular(8.0)),
+                  labelStyle: const TextStyle(
+                    fontFamily: 'Nunito',
+                    // fontStyle: FontStyle.italic,
+                    // fontWeight: FontWeight.bold,
+
+                  ),
+                  hintStyle: const TextStyle(
+                    fontFamily: 'Nunito',
+                    // fontWeight: FontWeight.bold,
+                    // fontStyle: FontStyle.italic,
+                      fontSize: 14
+                  ),
+                ),
                 onChanged: (_) => _checkInput(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -231,16 +297,17 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
           const Text(
             "Don't have a login yet.....!",
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(color: Colors.black54,fontFamily: 'Nunito', fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             width: 400,
             child: Text(
               "Just enter your mobile number and follow us. We ensure your Signup for a New Account in few steps . ",
-              style: TextStyle(color: Colors.black54),
+              style: TextStyle(color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold),
             ),
           )
         ],
+      ),
       ),
     );
   }

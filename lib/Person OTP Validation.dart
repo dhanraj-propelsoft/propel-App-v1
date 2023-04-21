@@ -17,21 +17,23 @@ class OtpValidationScreen extends StatefulWidget {
 
 class _OtpValidationScreenState extends State<OtpValidationScreen> {
   final TextEditingController _otpController = TextEditingController();
+  get otp => _otpController.text;
   final StreamController<bool> _buttonController = StreamController<bool>();
   bool _isButtonEnabled = false;
-  get otp => _otpController.text;
   Future<void> stage1(tempId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('tempModel', tempId);
     await otpValidation();
   }
+  String msg = 'Invalid otp';
   Future<void> otpValidation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int id = prefs.getInt("tempModel") ?? 0;
+    await prefs.setString( 'otp', otp);
     var data = {
       // 'stage': '4',
       'tempId': id,
-      'otp': _otpController.text,
+      'otp': otp,
     };
     print("<___________________Input OTP Api __________________________>");
     // print(data);
@@ -40,16 +42,44 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
     print("<___________________Output OTP Api __________________________>");
     print(body);
     if(body['success'] ==true) {
-      print('success');
+      var responseData = body['data'];
+      print(responseData);
+      var uId = responseData['uid'];
+      // print(uId);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('data', uId);
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>  PasswordCreationScreen()),
+            builder: (context) =>  const PasswordCreationScreen()),
       );
     }else{
-      print("don't get otp");
+      msg;
     }
   }
+  Future<void> resendOtp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("tempModel") ?? 0;
+    String? mobileNumber = prefs.getString('mobileNumber');
+    var data = {
+      'tempId': id,
+      'mobileNumber': mobileNumber,
+    };
+    print("<___________________Resend OTP Api __________________________>");
+    // print(data);
+    var res = await CallApi().postData('storeTempPerson', data);
+    var body = json.decode(res.body);
+    print("<___________________Output Resend OTP Api __________________________>");
+    print(body);
+    if (body['success'] == true) {
+      print('Resent otp successfully ');
+      // Reset the OTP field
+      // _otpController.clear();
+    } else {
+      // Set an error message or do something else
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -73,6 +103,11 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
 
   void _onSubmit() {
     otpValidation();
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) =>  PasswordCreationScreen()),
+    // );
   }
 
   @override
@@ -99,6 +134,7 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                             'Propel soft',
                             style: TextStyle(
                               fontSize: 30,
+                              fontFamily: 'Nunito',
                               color: Color(0xFF9900FF),
                               // fontWeight: FontWeight.bold,
                             ),
@@ -117,90 +153,57 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                 ),
                 const Padding(padding: EdgeInsets.only(top: 50)),
                 Center(
-                  child: SizedBox(
-                  width: 300,
-                  height: 30,
                   child: Column(
                     children: [
-                      TextField(
+                     SizedBox(
+                    width: 350,
+                    height: 40,
+                     child:  TextField(
                         controller: _otpController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
+                          labelStyle:  TextStyle(
+                            fontFamily: 'Nunito',
+                            // fontStyle: FontStyle.italic,
+                            // fontWeight: FontWeight.bold,
+
+                          ),
                           labelText: 'Enter OTP',
                         ),
-                        maxLength: 4,
+                        // maxLength: 4,
                       ),
+                  ),
+                      const Padding(padding: EdgeInsets.only(top: 30)),
+                      SizedBox(
+                        width: 350,
+                        height: 40,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child:   TextButton(
+                            onPressed: () {
+                              resendOtp();
+                            },
+                            child: const Text('Resend OTP',style: TextStyle(color: Colors.blueAccent,fontFamily: 'Nunito'),),
+                          ),
+                        ),
+                      ),
+
+                      const Padding(padding: EdgeInsets.only(top: 50)),
                       StreamBuilder<bool>(
                         stream: _buttonController.stream,
                         builder: (context, snapshot) {
                           return ElevatedButton(
                             onPressed: snapshot.data ?? false ? _onSubmit : null,
-                            child: const Text('Validate'),
+                            child: const Text('Validate',style: TextStyle(fontFamily: 'Nunito'),),
                           );
                         },
                       ),
-                    ],
-                  ),
-                ),
-                ),
+
       ])),
+    ])
+    ),
     );
   }
 }
 
-// class OTP_validationScreen extends StatefulWidget {
-//   const OTP_validationScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<OTP_validationScreen> createState() => _OTP_validationScreenState();
-// }
-//
-// class _OTP_validationScreenState extends State<OTP_validationScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//           child: Column(
-//               children: [
-//           const Padding(padding: EdgeInsets.only(top: 50)),
-//                 Center(
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             SvgPicture.asset(
-//               'asset/logo.svg',
-//               width: 50,
-//               height: 50,
-//             ),
-//             const SizedBox(width: 10),
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: const [
-//                 Text(
-//                   'Propel soft',
-//                   style: TextStyle(
-//                     fontSize: 30,
-//                     color: Color(0xFF9900FF),
-//                     // fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//                 Text(
-//                   'Accelerating Business Ahead',
-//                   style: TextStyle(
-//                     fontSize: 10,
-//                     color: Colors.grey,
-//                   ),
-//                 ),
-//               ],
-//             )
-//           ],
-//         ),
-//       ),
-//
-//                    ]
-//                  )
-//               )
-//             );
-//   }
-// }

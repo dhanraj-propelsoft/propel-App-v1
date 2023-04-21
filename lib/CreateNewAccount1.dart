@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
-import 'package:propel_login/NewAccount2.dart';
+import 'package:propel_login/CreateNewAccount2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewAccount1Screen extends StatefulWidget {
@@ -50,7 +50,7 @@ Future<void> stage2() async {
   await prefs.setString( 'nickName', nickName);
   var data = {
     'stage': '2',
-    'tempModel': id,
+    'tempId': id,
     'salutation': salutationController,
     'firstName' : firstName,
     'middleName' : middleName,
@@ -64,6 +64,8 @@ Future<void> stage2() async {
   print("<___________________Output Create New Account 1 Api __________________________>");
   print(body);
   if(body['success'] ==true) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString( 'salutation', salutationController!);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -99,7 +101,7 @@ Future<void> stage2() async {
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFF9900FF),
-                      fontFamily: '',
+                      fontFamily: 'Nunito',
                       // fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -118,7 +120,7 @@ Future<void> stage2() async {
                 const Padding(padding: EdgeInsets.only(top: 40,)),
                 Container(
                   alignment: const Alignment(-0.7, 0.5),
-                  child:  const Text('Create New Account',style: TextStyle(fontSize: 14),),
+                  child:  const Text('Create New Account',style: TextStyle(fontSize: 14, fontFamily: 'Nunito'),),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 40)),
                 Center(
@@ -138,7 +140,7 @@ Future<void> stage2() async {
                         items: salutationMap.keys.map((String key) {
                           return DropdownMenuItem<String>(
                             value: salutationMap[key],
-                            child: Text(key),
+                            child: Text(key,style: TextStyle( fontFamily: 'Nunito'),),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -197,7 +199,15 @@ Future<void> stage2() async {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: 'First Name',
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0))),
+                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        labelStyle: const TextStyle(
+                          fontFamily: 'Nunito',
+                          color: Colors.black87
+                          // fontStyle: FontStyle.italic,
+                          // fontWeight: FontWeight.bold,
+
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -211,7 +221,15 @@ Future<void> stage2() async {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: 'Middle Name',
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0))),
+                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        labelStyle: const TextStyle(
+                          fontFamily: 'Nunito',
+                            color: Colors.black87
+                          // fontStyle: FontStyle.italic,
+                          // fontWeight: FontWeight.bold,
+
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -225,7 +243,14 @@ Future<void> stage2() async {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: 'Last Name or Initial ',
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0))),
+                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        labelStyle: const TextStyle(
+                        fontFamily: 'Nunito',
+                            color: Colors.black87
+                        // fontStyle: FontStyle.italic,
+                        // fontWeight: FontWeight.bold,
+
+                      ),),
                     ),
                   ),
                 ),
@@ -239,7 +264,16 @@ Future<void> stage2() async {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: 'Nick Name or Alias',
-                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0))),
+                          border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)
+                          ),
+                        labelStyle: const TextStyle(
+                          fontFamily: 'Nunito',
+                            color: Colors.black87
+                          // fontStyle: FontStyle.italic,
+                          // fontWeight: FontWeight.bold,
+
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -271,7 +305,7 @@ Future<void> stage2() async {
                         ),
                         child: const Text(
                           'Next',
-                          style: TextStyle(color: Colors.purple),
+                          style: TextStyle(color: Colors.purple, fontFamily: 'Nunito',),
                         ),
                       ),
                     ),

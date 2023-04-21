@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          fontFamily: 'CenturySchoolbook',
         primarySwatch: Colors.purple
       ),
       home:   SplashScreen(),

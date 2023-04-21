@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
-import 'package:propel_login/OTP%20Validation.dart';
+import 'package:propel_login/Person%20OTP%20Validation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewAccount2Screen extends StatefulWidget {
@@ -45,6 +45,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
     await prefs.setInt('tempModel', tempId);
     await stage3();
   }
+
   Future<void> stage3() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -108,6 +109,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                           style: TextStyle(
                             fontSize: 30,
                             color: Color(0xFF9900FF),
+                            fontFamily: 'Nunito',
                             // fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -141,7 +143,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                       items: genderMap.keys.map((String key) {
                         return DropdownMenuItem<String>(
                           value: genderMap[key],
-                          child: Text(key),
+                          child: Text(key,  style: TextStyle( fontFamily: 'Nunito',), ),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -170,7 +172,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                       items: bloodGroupMap.keys.map((String key) {
                         return DropdownMenuItem<String>(
                           value: bloodGroupMap[key],
-                          child: Text(key),
+                          child: Text(key, style: TextStyle( fontFamily: 'Nunito'),),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -194,6 +196,13 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                        border: OutlineInputBorder(
                            borderRadius: BorderRadius.circular(8.0)
                        ),
+                       labelStyle: const TextStyle(
+                         fontFamily: 'Nunito',
+                           color: Colors.black87
+                         // fontStyle: FontStyle.italic,
+                         // fontWeight: FontWeight.bold,
+
+                       ),
                      ),
                      onTap: () async {
                        FocusScope.of(context).requestFocus(FocusNode());
@@ -206,7 +215,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                        if (picked != null && picked != _selectedDate) {
                          setState(() {
                            _selectedDate = picked;
-                           _controller.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+                           _controller.text = DateFormat('dd-MM-yyyy').format(_selectedDate!);
                          });
                        }
                      },
@@ -245,7 +254,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                       ),
                       child: const Text(
                         'Next',
-                        style: TextStyle(color: Colors.purple),
+                        style: TextStyle(color: Colors.purple, fontFamily: 'Nunito',),
                       ),
                     ),
                   ),

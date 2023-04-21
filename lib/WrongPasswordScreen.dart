@@ -1,16 +1,92 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:propel_login/Api%20Connection/Api.dart';
+import 'package:propel_login/Email%20OTP%20Validation%20%20for%20Forgot%20Password%20Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'PasswordScreen.dart';
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+class WrongPasswordScreen extends StatefulWidget {
+  const WrongPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<WrongPasswordScreen> createState() => _WrongPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  
+class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
+
+  Future<void> otpValidation(uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('data', uid);
+    await  generateEmailOTP();
+  }
+  // Future<void> emailOTPValidation() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String uid = prefs.getString("data") ?? '';
+  //   var data = {
+  //     'uid': uid,
+  //   };
+  //   print(data);
+  //   var res = await CallApi().postData('generateEmailOtp', data);
+  //   var body = json.decode(res.body);
+  //   if (body['uid'] == true) {
+  //    // Store OTP in SharedPreferences
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const EmailOtpValidationScreen()),
+  //     );
+  //   } else {
+  //     print("Failed to generate OTP.");
+  //   }
+  // }
+  Future<void> generateEmailOTP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uid = prefs.getString("data") ?? '';
+    var data = {
+      'uid': uid,
+    };
+    print("<___________________Input generateEmailOTP Api __________________________>");
+    print(data);
+
+    var res = await CallApi().postData('generateEmailOtp', data);
+    var body = json.decode(res.body);
+    print("<___________________output generateEmailOTP Api __________________________>");
+    print(body);
+
+    if (body['message'] == 'ok' || body['message'] == 'success') {
+      // Store OTP in SharedPreferences
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (ctx) => const EmailOtpValidationScreen()));
+  }
+
+  String fullName = '';
+
+  String firstName = '';
+  String middleName = '';
+  // String lastName = '';
+
+  void getNames() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? first = prefs.getString('firstName');
+    String? middle = prefs.getString('middleName');
+    // String? last = prefs.getString('lastName');
+
+    setState(() {
+      firstName = first ?? '';
+      middleName = middle ?? '';
+      // lastName = last ?? '';
+      fullName =
+      '$firstName${middleName.isNotEmpty ? '$middleName ' : ''}';
+      // '$lastName';
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getNames();
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -39,6 +115,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         'Propel soft',
                         style: TextStyle(
                           fontSize: 30,
+                          fontFamily: 'Nunito',
                           color: Color(0xFF9900FF),
                           // fontWeight: FontWeight.bold,
                         ),
@@ -56,21 +133,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
             const Padding(padding: EdgeInsets.symmetric(horizontal: 50,vertical: 30)),
-            const Align(
-              alignment: Alignment(-0.7, 0.5),
-              child: Text('Hi! Selvaraj',style: TextStyle(fontWeight: FontWeight.bold),),
+            Align(
+              alignment: const Alignment(-0.7, 0.5),
+              child: Text('Hi! $fullName',style: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Nunito'),),
             ),
            const Padding(padding: EdgeInsets.only(top: 50)),
              const Center(
                child:
              SizedBox(
-               width: 360,
-               child: Text('Hope you bad entered wrong Password you can try again or else Reset through Forgot Password',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14), ),
+               width: 350,
+               child: Text('Hope you bad entered wrong Password you can try again or else Reset through Forgot '
+                   'Password',  style: TextStyle(fontSize: 16,color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold), ),
               ),
              ),
             const Padding(padding: EdgeInsets.only(top: 50)),
             SizedBox(
-              width: 300,
+              width: 350,
               height: 40,
               child: Row(
                 children: [
@@ -78,7 +156,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     width: 150,
                     height: 30,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        generateEmailOTP();
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const EmailOtpValidationScreen()),
+                        // );
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -92,7 +176,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                         ),
                       ),
-                      child: const Text("Forgot Password",style: TextStyle(color: Colors.purple),),
+                      child: const Text("Forgot Password",style: TextStyle(color: Colors.purple,fontFamily: 'Nunito'),),
                     ),
                   ),
                   const Spacer(),
@@ -119,7 +203,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                         ),
                       ),
-                      child: const Text('Try Again',style: TextStyle(color: Colors.purple)),
+                      child: const Text('Try Again',style: TextStyle(color: Colors.purple,fontFamily: 'Nunito')),
                     ),
                   ),
                 ],
@@ -127,11 +211,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             const Padding(padding: EdgeInsets.only(top: 50)),
             const SizedBox(
-              width: 250,
+              width: 300,
               child: Text.rich(
                 TextSpan(
                   text: "If you don't hold the above email/mobile , also if you are not holding any previous account Kindly contact ",
-                  style: TextStyle(fontSize: 12,color: Colors.black54),
+                  style: TextStyle(fontSize: 14,color: Colors.black54,fontFamily: 'Nunito',fontWeight: FontWeight.bold),
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Propelsoft',

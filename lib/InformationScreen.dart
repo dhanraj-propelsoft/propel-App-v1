@@ -55,21 +55,22 @@ class _InformationScreenState extends State<InformationScreen> {
         const Center(
           child: SizedBox(
             width: 300,
-            child:  Text('No user information was found on our system,'),
+            child:  Text('No user information was found on our system,',style: TextStyle( fontFamily: 'Nunito',fontSize: 14)),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const Padding(padding: EdgeInsets.only(top: 30)),
         const Center(
           child: SizedBox(
             width: 300,
-            child:  Text('To continue further kindly signup for a new account by filling the following details'),
+            child:  Text('To continue further kindly signup for a new account by filling the following details',
+              style: TextStyle( fontFamily: 'Nunito',fontSize: 14)),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const Padding(padding: EdgeInsets.only(top: 30)),
         const Center(
           child:  SizedBox(
             width: 300,
-            child: Text('Its our pleasure to have you as an user'),
+            child: Text('Its our pleasure to have you as an user',style: TextStyle( fontFamily: 'Nunito',fontSize: 14)),
           ),
         ),
         const Padding(padding: EdgeInsets.only(top: 50)),
@@ -96,7 +97,7 @@ class _InformationScreenState extends State<InformationScreen> {
                       ),
                     ),
                   ),
-                  child: const Text('Cancel',style: TextStyle(color: Colors.purple),),
+                  child: const Text('Cancel',style: TextStyle(color: Colors.purple,fontFamily: 'Nunito'),),
                 ),
               ),
               const Spacer(),
@@ -126,7 +127,7 @@ class _InformationScreenState extends State<InformationScreen> {
                     ),
                     child: const Text(
                       'Continue',
-                      style: TextStyle(color: Colors.purple),
+                      style: TextStyle(color: Colors.purple,fontFamily: 'Nunito',),
                     ),
                   ),
                 ),

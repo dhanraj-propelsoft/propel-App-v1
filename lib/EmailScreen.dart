@@ -24,20 +24,23 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   void initState() {
     super.initState();
+    phoneNumber();
     _focusNode.addListener(_onFocusChange);
   }
+  String mobileNumbers = '';
+  String hiddenmobileNumbers = '';
 
-  Future<void> PhoneNumber(phoneNumber) async {
+  void phoneNumber() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('mobileNumber', phoneNumber);
-
-    await checkEmail(phoneNumber);
+    String? phoneNumber = prefs.getString('mobileNumber');
+    setState(() {
+      mobileNumbers = phoneNumber ?? '';
+      hiddenmobileNumbers = "${phoneNumber?.substring(0, 3)}*****";
+    });
   }
-
   Future<void> checkEmail(email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? mobileNumber = prefs.getString('mobileNumber');
-
     var data = {
       'email': email,
       'mobileNumber': mobileNumber,
@@ -46,35 +49,70 @@ class _EmailScreenState extends State<EmailScreen> {
     print(data);
     var res = await CallApi().postData('findCredential', data);
     var body = json.decode(res.body);
-
     print("<___________________Output Email Api __________________________>");
     print(body);
-    if(body['success'] ==true){
+    if (body['success'] == true) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString( 'email', email);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (ctx) => const InformationScreen()));
-      _clearTextField();
-    }
-    else {
-      // Show alert message
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Alert'),
-          content: Text('phone number and email is already exits.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
-    // print(type);
-  }
+      await prefs.setString('email', email);
+      var responseData = body['data'];
+      print("Response Data");
+      print(responseData);
+      var uid = responseData['uid'] ?? '';
+      var personData;
+      if(uid.isEmpty) {
+        personData = responseData['personData'];
+      }
+      print("worked");
+      var puid;
+      if(personData != null) {
+         puid = personData[0]['personUid'] ?? '';
+      }
+      else{
+        puid="";
+      }
+      var fUser = (uid.isEmpty && puid.isEmpty);
 
+      if (fUser) {
+        await prefs.setString('data', "");
+      } else {
+        await prefs.setString('data', uid ?? puid);
+      }
+
+      if (fUser) {
+        await prefs.setString('status', 'fUser');
+      } else if (uid.isEmpty) {
+        await prefs.setString('status', 'puid');
+      } else {
+        await prefs.setString('status', 'uid');
+      }
+
+
+      print(uid);
+      var type = body['data']['type'] ?? 0;
+      if (type == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (ctx) => const InformationScreen()),
+        );
+        _clearTextField();
+      } else if (type == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (ctx) => const InformationScreen()),
+        );
+        _clearTextField();
+      } else if (type == 3) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (ctx) => const InformationScreen()),
+        );
+        _clearTextField();
+      } else {
+        print('phone number and email already exist');
+        _clearTextField();
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -89,7 +127,7 @@ class _EmailScreenState extends State<EmailScreen> {
   }
   void _checkInput() {
     String value = _emailcontroller.text;
-    bool isValidemail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value);
+    bool isValidemail = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value);
 
     setState(() {
       _isButtonDisabled = !isValidemail;
@@ -123,6 +161,7 @@ class _EmailScreenState extends State<EmailScreen> {
                       Text(
                         'Propel soft',
                         style: TextStyle(
+                          fontFamily: 'Nunito',
                           fontSize: 30,
                           color: Color(0xFF9900FF),
                           // fontWeight: FontWeight.bold,
@@ -142,10 +181,11 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
             ),
             const Padding(padding: EdgeInsets.only(top: 50)),
-            const Center(
+             Center(
               child: SizedBox(
                 width: 350,
-              child: Text('No credentials are fount , with your mobile number 78**5****56, Kindly provide email for cross verification'),
+              child: Text('No credentials are fount , with your mobile number $hiddenmobileNumbers, Kindly provide email for cross verification',
+              style: const TextStyle(fontFamily: 'Nunito',fontSize: 14),),
             ),
             ),
             const Padding(padding: EdgeInsets.only(top: 50)),
@@ -162,7 +202,20 @@ class _EmailScreenState extends State<EmailScreen> {
                       labelText: _showLabel ? 'Email *' : null,
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0))),
+                          borderRadius: BorderRadius.circular(8.0)),
+                    labelStyle: const TextStyle(
+                      fontFamily: 'Nunito',
+                      // fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+
+                    ),
+                    hintStyle: const TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.bold,
+                        // fontStyle: FontStyle.italic,
+                        fontSize: 14
+                    ),
+                  ),
                   onChanged: (_) => _checkInput(),
                 ),
               ),
@@ -225,7 +278,8 @@ class _EmailScreenState extends State<EmailScreen> {
               child: SizedBox(
                 width: 350,
                 child: Text(
-                  "Kindly provide you personal and permeant email only never enter any official email which may be invalid on time.. "
+                  "Kindly provide you personal and permeant email only never enter any official email which may be invalid on time..",
+                  style: TextStyle(color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold,fontSize: 14),
                 ),
               ),
             )

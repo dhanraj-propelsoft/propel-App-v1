@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
-import 'package:propel_login/CreateAccountSuccessfullScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PasswordCreationScreen extends StatefulWidget {
-  const PasswordCreationScreen({Key? key}) : super(key: key);
+import 'CreateAccountSuccessfullScreen.dart';
+
+class NewPasswordCreateScreen extends StatefulWidget {
+  const NewPasswordCreateScreen({Key? key}) : super(key: key);
 
   @override
-  _PasswordCreationScreenState createState() => _PasswordCreationScreenState();
+  State<NewPasswordCreateScreen> createState() => _NewPasswordCreateScreenState();
 }
 
-class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
+class _NewPasswordCreateScreenState extends State<NewPasswordCreateScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final StreamController<bool> _buttonController = StreamController<bool>();
@@ -25,21 +27,21 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
   Future<void> otpValidation(uid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('data', uid);
-    await createPassword(password);
+    await newCreatePassword();
   }
-  Future<void> createPassword(password) async {
+  Future<void> newCreatePassword() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uid = prefs.getString("data") ?? '';
     await prefs.setString( 'password', password);
     await prefs.setString( 'passwordConfirmation', confirmPassword);
     var data = {
-      'uId': uid,
+      'uid': uid,
       'password': password,
       'passwordConfirmation': confirmPassword,
     };
     print("<___________________Input CreatePassword Api __________________________>");
     // print(data);
-    var res = await CallApi().postData('storeUser', data);
+    var res = await CallApi().postData('changePassword', data);
     var body = json.decode(res.body);
     print("<___________________Output CreatePassword Api __________________________>");
     print(body);
@@ -47,7 +49,7 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('password', password);
       await prefs.setString( 'passwordConfirmation', confirmPassword);
-       Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>  const SuccessScreen()),
@@ -97,7 +99,7 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
 
 
   void _onSubmit() {
-    createPassword(password);
+    newCreatePassword();
   }
 
   // void _togglePasswordVisibility() {
@@ -153,9 +155,9 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
             ),
           ),
           const Padding(padding: EdgeInsets.only(top: 50)),
-            SizedBox(
-              width: 350,
-              height: 40,
+          SizedBox(
+            width: 350,
+            height: 40,
             child: TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
@@ -180,7 +182,7 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
               obscureText: !_isConfirmPasswordVisible,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                labelText: 'Retype Password for Confirmation',
+                labelText: 'Confirm Password',
                 labelStyle: const TextStyle(
                   fontFamily: 'Nunito',
                   // fontStyle: FontStyle.italic,
@@ -208,47 +210,9 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
               }
               return ElevatedButton(
                 onPressed: snapshot.data ?? false ? _onSubmit : null,
-                child: const Text('Sign up',style: TextStyle(fontFamily: 'Nunito'),),
+                child: const Text('Submit',style: TextStyle(fontFamily: 'Nunito'),),
               );
             },
-          ),
-          const Padding(padding: EdgeInsets.only(top: 50)),
-          SizedBox(
-             width: 350,
-            child: RichText(
-            text: const TextSpan(
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Nunito',
-                fontSize: 14,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'By clicking sign up, you agree to our ',style: TextStyle(fontFamily: 'Nunito'),
-                ),
-                TextSpan(
-                  text: 'Term , Data Policy',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontFamily: 'Nunito',
-                  ),
-                ),
-                TextSpan(
-                  text: ' and ',style: TextStyle(fontFamily: 'Nunito'),
-                ),
-                TextSpan(
-                  text: 'Cookie Policy',
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    color: Colors.blue,
-                  ),
-                ),
-                TextSpan(
-                  text: '. Also, you agree to receive SMS and email notifications from us.',style: TextStyle(fontFamily: 'Nunito'),
-                ),
-              ],
-            ),
-          ),
           ),
         ],
       ),
