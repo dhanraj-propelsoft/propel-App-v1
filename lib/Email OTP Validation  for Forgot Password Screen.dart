@@ -167,9 +167,16 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                                   fontFamily: 'Nunito',
                                   // fontStyle: FontStyle.italic,
                                   // fontWeight: FontWeight.bold,
+                                ),
+                                hintStyle:  TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 14,
+                                  // fontStyle: FontStyle.italic,
+                                  // fontWeight: FontWeight.bold,
 
                                 ),
                                 labelText: 'Enter OTP',
+                                  hintText: 'Enter OTP Received on your email  xxxx@gxxxl.com',
                               ),
                               // maxLength: 4,
                             ),
