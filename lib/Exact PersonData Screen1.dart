@@ -11,14 +11,33 @@ class ExactPersonScreen1 extends StatefulWidget {
 }
 
 class _ExactPersonScreen1State extends State<ExactPersonScreen1> {
-  String? salutationController = 'Salutation';
   Map<String, String> salutationMap = {
-    'Salutation': 'Salutation',
-    'Mr.': '1',
-    'Mrs.': '2',
-    'Ms.': '3',
-    'Dr.': '4',
+    'Mr.': 'Mr.',
+    'Mrs.': 'Mrs.',
+    'Ms.': 'Ms.',
+    'Dr.': 'Dr.',
   };
+  late String salutation;
+  late String salutationValueController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.personData['salutation_id'] == 1) {
+      salutation = 'Mr.';
+    } else if (widget.personData['salutation_id'] == 2) {
+      salutation = 'Mrs.';
+    } else if (widget.personData['salutation_id'] == 3) {
+      salutation = 'Ms.';
+    } else if (widget.personData['salutation_id'] == 4) {
+      salutation = 'Dr.';
+    } else {
+      salutation = 'Salutation';
+    }
+    salutationValueController = salutation;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,32 +90,34 @@ class _ExactPersonScreen1State extends State<ExactPersonScreen1> {
           ),
           const Padding(padding: EdgeInsets.only(top: 40)),
           Center(
-              child: Container(
-                width: 300,
-                height: 40,
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8.0)
-                ),
-                child: DropdownButton<String>(
-                  value: salutationController ?? salutationMap.keys.first,
-                  isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down, size: 22),
-                  underline: const SizedBox(),
-                  items: salutationMap.keys.map((String key) {
-                    return DropdownMenuItem<String>(
-                      value: salutationMap[key],
-                      child: Text(key, style: const TextStyle(fontFamily: 'Nunito'),),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      salutationController = value;
-                    });
-                  },
-                ),
-              )
+            child: Container(
+              width: 300,
+              height: 40,
+              decoration: BoxDecoration(
+                  // border: Border.all(
+                  //   color: Colors.black,
+                  //   width: 1,
+                  // ),
+                  borderRadius: BorderRadius.circular(5)),
+              padding: const EdgeInsets.only(left: 10),
+              child:  DropdownButton<String>(
+                value: salutationValueController,
+                isExpanded: true,
+                icon: const Icon(Icons.keyboard_arrow_down, size: 22),
+                underline:  Container(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    salutationValueController = newValue!;
+                  });
+                },
+                items: salutationMap.entries.map((MapEntry<String, String> entry) {
+                  return DropdownMenuItem<String>(
+                    value: entry.key,
+                    child: Text(entry.value),
+                  );
+                }).toList(),
+              ),
+            ),
           ),
           const Padding(
               padding: EdgeInsets.only(
@@ -112,7 +133,12 @@ class _ExactPersonScreen1State extends State<ExactPersonScreen1> {
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   labelText: 'First Name',
-                  border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    // borderSide: const BorderSide(
+                    //   color: Colors.black,
+                    //   width: 1,
+                    // ),
                   ),
                   labelStyle: const TextStyle(
                     fontFamily: 'Nunito',
@@ -137,7 +163,7 @@ class _ExactPersonScreen1State extends State<ExactPersonScreen1> {
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   labelText: 'Middle Name',
-                  border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)
+                  border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0),
                   ),
                   labelStyle: const TextStyle(
                     fontFamily: 'Nunito',
@@ -200,32 +226,6 @@ class _ExactPersonScreen1State extends State<ExactPersonScreen1> {
               ),
             ),
           ),
-// const Padding(padding: EdgeInsets.only(top: 60)),
-//           Center(
-//             child: Container(
-//               width: 350,
-//               height: 40,
-//               decoration: BoxDecoration(
-//                   border: Border.all(
-//                     color: Colors.black, //color of border
-//                     width: 1, //width of border
-//                   ),
-//                   borderRadius: BorderRadius.circular(5)),
-//               padding: const EdgeInsets.only(left: 10),
-//               child:  TextFormField(
-//                 initialValue: '${widget.personData['nick_name']}',
-//                 style: TextStyle(fontSize: 16, fontFamily: 'Nunito'),
-//                 decoration: InputDecoration(
-//                   border: InputBorder.none,
-//                   hintText: 'Enter new nick name',
-//                   hintStyle: TextStyle(color: Colors.grey),
-//                 ),
-//                 onChanged: (value) {
-//                   // Save the updated nick name to a variable or update the widget state.
-//                 },
-//               ),
-//             ),
-//           ),
           const Padding(padding: EdgeInsets.only(top: 40)),
           Padding(
             padding: const EdgeInsets.only(left: 250.0),

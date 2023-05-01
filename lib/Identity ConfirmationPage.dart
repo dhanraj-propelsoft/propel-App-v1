@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:propel_login/Api%20Connection/Api.dart';
 import 'package:propel_login/CreateNewAccount1.dart';
 import 'package:propel_login/Mobile%20OTP%20Validation%20Screen.dart';
 import 'package:propel_login/PersonData%20ConfirmationScreen.dart';
+import 'package:propel_login/PhoneNumScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PDCScreen extends StatefulWidget {
@@ -317,12 +319,7 @@ class _PDCScreenState extends State<PDCScreen> {
                           onChanged: (value) {
                             setState(() {
                               selectedOption = value;
-                              isButtonEnabled = false;
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) => const NewAccount1Screen()),
-                              // );
-                              // _clearTextField();
+                              isButtonEnabled = true;
                             });
                           },
                         ),
@@ -341,12 +338,13 @@ class _PDCScreenState extends State<PDCScreen> {
                     const Padding(padding: EdgeInsets.only(top: 50)),
                     ElevatedButton(
                       onPressed: isButtonEnabled ? () {
-
-                            stage1(stage);
-
-                          _clearTextField();
+                        if (selectedOption == '1') {
+                          stage1(stage);
+                        } else if (selectedOption == '2') {
+                          showConfirmationDialog();
                         }
-                      : null,
+                        _clearTextField();
+                      } : null,
                     child: const Text('Submit',style: TextStyle(fontFamily: 'Nunito')),
                     ),
                   ],
@@ -354,6 +352,78 @@ class _PDCScreenState extends State<PDCScreen> {
               ),
         ]),
       ),
+    );
+  }
+  Future<void> showConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: AlertDialog(
+            title: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xFF9900FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child:  Center(
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                      Text(
+                        'INFORMATION',
+                        style: TextStyle(
+                          color: Color(0xFF9900FF),
+                          fontSize: 18.0,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.info,
+                        color: Color(0xFF9900FF),
+                      ),
+                    ],
+                  ),
+                )),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  SizedBox(
+                    width: 280,
+                    child: Column(
+                      children: const [
+                        Text(
+                          'Sorry for the inconvenience caused, we need a unique mobile number and email owned by you to signup into the system.',
+                          style: TextStyle(fontFamily: 'Nunito'),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text(
+                    'Continue', style: TextStyle(fontFamily: 'Nunito')),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  const LoginScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -374,5 +444,4 @@ class Person {
   });
 }
 
-// Get the data from the API response
 

@@ -179,7 +179,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                                       // fontWeight: FontWeight.bold,
 
                                     ),
-                                  hintText: 'Enter OTP Received on your email  xx@gxxl.com'
+                                  hintText: 'Enter OTP Received on your email xx@gxxl.com'
                                 ),
                                 // maxLength: 4,
                               ),

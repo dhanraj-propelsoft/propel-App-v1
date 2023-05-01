@@ -136,7 +136,7 @@ Future<void> stage2() async {
                         value: salutationController,
                         isExpanded: true,
                         icon: const Icon(Icons.keyboard_arrow_down, size: 22),
-                        underline: const SizedBox(),
+                          underline:  Container(),
                         items: salutationMap.keys.map((String key) {
                           return DropdownMenuItem<String>(
                             value: salutationMap[key],
