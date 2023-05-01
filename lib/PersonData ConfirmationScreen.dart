@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class PersonDataConfirmationScreen extends StatefulWidget {
-  const PersonDataConfirmationScreen({Key? key}) : super(key: key);
+  final List<Map<String, dynamic>>? personData;
+  const PersonDataConfirmationScreen({Key? key, this.personData}) : super(key: key);
 
   @override
   State<PersonDataConfirmationScreen> createState() =>
@@ -13,6 +16,34 @@ class PersonDataConfirmationScreen extends StatefulWidget {
 
 class _PersonDataConfirmationScreenState
     extends State<PersonDataConfirmationScreen> {
+  String personName = '';
+  String mobileId = '';
+  String hiddenmobileId = '';
+  String emailId = '';
+  String emailIdcaracter = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getPersonData();
+  }
+
+  void getPersonData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List? personData = prefs.getStringList('personData')?.map((data) => json.decode(data)).toList();
+    setState(() {
+      personName = '${personData![0]['firstName']} ${personData[0]['middleName']}';
+      mobileId = personData[0][mobileId];
+      hiddenmobileId = "${mobileId.substring(0, 3)}*****";
+      emailId = personData[0][emailId];
+      emailIdcaracter = '${emailId.replaceRange(2, emailId.indexOf('@'), "*" * (emailId.indexOf('@') - 2))}@${emailId.substring(emailId.indexOf('@') + 1)}';
+    });
+  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getNames();
+  // }
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -96,21 +127,21 @@ class _PersonDataConfirmationScreenState
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Arthur Shelby',
-                      style: TextStyle(fontSize: 15,fontFamily: 'Nunito',),
+                     Text(
+                       personName,
+                      style: const TextStyle(fontSize: 15,fontFamily: 'Nunito',),
                     ),
                     const SizedBox(height: 5),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
-                          'By order of the peaky blinders',
-                          style: TextStyle(fontSize: 12,fontFamily: 'Nunito',),
+                          hiddenmobileId,
+                          style: const TextStyle(fontSize: 12,fontFamily: 'Nunito',),
                         ),
-                        Text(
-                          'Some other subtitle',
-                          style: TextStyle(fontSize: 12,fontFamily: 'Nunito',),
+                         Text(
+                           emailIdcaracter,
+                          style: const TextStyle(fontSize: 12,fontFamily: 'Nunito',),
                         ),
                       ],
                     ),

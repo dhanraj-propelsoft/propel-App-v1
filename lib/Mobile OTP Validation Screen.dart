@@ -4,9 +4,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
-import 'package:propel_login/Email%20OTP%20Validation%20%20for%20Forgot%20Password%20Screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Email OTP Validation for Exact and Mapped Person Screen.dart';
 
 class MobileOtpValidation extends StatefulWidget {
   const MobileOtpValidation({Key? key}) : super(key: key);
@@ -47,8 +48,9 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
     if (body['message'] == 'ok' || body['message'] == 'success') {
       // Store OTP in SharedPreferences
     }
-    Navigator.push(context,
-        MaterialPageRoute(builder: (ctx) => const EmailOtpValidationScreen()));
+    generateEmailOTP();
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (ctx) => const EmailOtpValidationScreen()));
   }
   Future<void> resendOtp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -86,7 +88,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
       // Store OTP in SharedPreferences
     }
     Navigator.push(context,
-        MaterialPageRoute(builder: (ctx) => const EmailOtpValidationScreen()));
+        MaterialPageRoute(builder: (ctx) => const EmailOtpValidationExactAndMappedPersonScreen()));
   }
   void _onOtpChanged() {
     setState(() {
@@ -166,7 +168,15 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                                   // fontWeight: FontWeight.bold,
 
                                 ),
+                                hintStyle:  TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 14
+                                  // fontStyle: FontStyle.italic,
+                                  // fontWeight: FontWeight.bold,
+
+                                ),
                                 labelText: 'Enter OTP',
+                                hintText: 'Enter OTP Received on your mobile  99xxx xx55x',
                               ),
                               // maxLength: 4,
                             ),

@@ -8,7 +8,7 @@ import 'package:propel_login/CreateNewAccount2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewAccount1Screen extends StatefulWidget {
-  const NewAccount1Screen({Key? key}) : super(key: key);
+  const NewAccount1Screen({Key? key, required personData}) : super(key: key);
 
   @override
   State<NewAccount1Screen> createState() => _NewAccount1ScreenState();
@@ -149,44 +149,6 @@ Future<void> stage2() async {
                           });
                         },
                       ),
-                      // DropdownButtonFormField<String>(
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Saludation',
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   value: salutationController,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       salutationController = value;
-                      //     });
-                      //   },
-                      //     items: _dropdownValues.map((Map<String, dynamic> item) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: item['value'],
-                      //       child: Text(item['key']),
-                      //     );
-                      //   }).toList(),
-                      // ),
-                      //
-                      // DropdownButton<String>(
-                      //   // decoration: const InputDecoration(
-                      //   //   labelText: 'Salutation',
-                      //   //   border: OutlineInputBorder(),
-                      //   // ),
-                      //   value: salutationController,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       salutationController = value;
-                      //     });
-                      //   },
-                     //   underline: const SizedBox(),
-                      //   items: _dropdownValues.map((Map<String, dynamic> item) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: item['value'],
-                      //       child: Text(item['key']),
-                      //     );
-                      //   }).toList(),
-                      // ),
                     )
                 ),
                 const Padding(padding: EdgeInsets.only(top: 30,)),

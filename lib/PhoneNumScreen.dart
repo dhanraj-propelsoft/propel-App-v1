@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'Nunito',
-                        color: Color(0xFF9900FF),
+                        color: Color(0xFF8000FF),
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -256,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: const BorderSide(
-                        color: Colors.purple,
+                        color: Color(0xFF9900FF),
                         width: 2.0,
                         style: BorderStyle.solid,
                       ),
@@ -267,13 +267,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (states.contains(MaterialState.disabled)) {
                         return Colors.white12;
                       }
-                      return Colors.purple;
+                      return Color(0xFF9900FF);
                     },
                   ),
                   foregroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.disabled)) {
-                        return Colors.purple;
+                        return Color(0xFF9900FF);
                       }
                       return Colors.white;
                     },

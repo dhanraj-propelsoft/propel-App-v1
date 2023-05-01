@@ -11,13 +11,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           fontFamily: 'CenturySchoolbook',
-        primarySwatch: Colors.purple
+          primarySwatch: MaterialColor(0xFF8000FF, <int, Color>{
+            50: Color(0xFFE6C6FF),
+            100: Color(0xFFC19AFF),
+            200: Color(0xFF9D6DFF),
+            300: Color(0xFF783FFF),
+            400: Color(0xFF561CFF),
+            500: Color(0xFF3400FF),
+            600: Color(0xFF2F00E6),
+            700: Color(0xFF2900BF),
+            800: Color(0xFF220099),
+            900: Color(0xFF1C0073),
+          })
       ),
-      home:   SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

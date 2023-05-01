@@ -110,7 +110,7 @@ class _PDCScreenState extends State<PDCScreen> {
       // FreshUser
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NewAccount1Screen()),
+        MaterialPageRoute(builder: (context) => const NewAccount1Screen(personData: null,)),
       );
     } else if (status=="puid") {
         // MappedPerson
@@ -357,3 +357,22 @@ class _PDCScreenState extends State<PDCScreen> {
     );
   }
 }
+// Define a new class to hold the data
+class Person {
+  final int personId;
+  final String personUid;
+  final String personName;
+  final String emailId;
+  final String mobileId;
+
+  Person({
+    required this.personId,
+    required this.personUid,
+    required this.personName,
+    required this.emailId,
+    required this.mobileId,
+  });
+}
+
+// Get the data from the API response
+
