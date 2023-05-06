@@ -87,7 +87,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  body: Center(
+  body:  SingleChildScrollView(
         child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 50)),
@@ -108,7 +108,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                           'Propel soft',
                           style: TextStyle(
                             fontSize: 30,
-                            color: Color(0xFF9900FF),
+                            color: Color(0xFF8000FF),
                             fontFamily: 'Nunito',
                             // fontWeight: FontWeight.bold,
                           ),
@@ -128,7 +128,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
               const Padding(padding: EdgeInsets.only(top: 70)),
               Center(
                   child: Container(
-                    width: 350,
+                    width: 300,
                     height: 40,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
@@ -157,7 +157,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
               const Padding(padding: EdgeInsets.only(top: 40)),
               Center(
                   child: Container(
-                    width: 350,
+                    width: 300,
                     height: 40,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
@@ -186,7 +186,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
               const Padding(padding: EdgeInsets.only(top: 40)),
               Center(
                   child: SizedBox(
-                    width: 350,
+                    width: 300,
                     height: 40,
                    child:  TextField(
                      controller: _controller,
@@ -244,7 +244,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF8000FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
@@ -254,7 +254,7 @@ class _NewAccount2ScreenState extends State<NewAccount2Screen> {
                       ),
                       child: const Text(
                         'Next',
-                        style: TextStyle(color: Colors.purple, fontFamily: 'Nunito',),
+                        style: TextStyle(color: Color(0xFF8000FF), fontFamily: 'Nunito',),
                       ),
                     ),
                   ),

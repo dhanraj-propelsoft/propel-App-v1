@@ -79,8 +79,8 @@ Future<void> stage2() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  Center(
-          child: Column(
+      body: SingleChildScrollView(
+        child: Column(
               children: [
           const Padding(padding: EdgeInsets.only(top: 50)),
         Center(
@@ -100,7 +100,7 @@ Future<void> stage2() async {
                     'Propel soft',
                     style: TextStyle(
                       fontSize: 30,
-                      color: Color(0xFF9900FF),
+                      color: Color(0xFF8000FF),
                       fontFamily: 'Nunito',
                       // fontWeight: FontWeight.bold,
                     ),
@@ -140,7 +140,7 @@ Future<void> stage2() async {
                         items: salutationMap.keys.map((String key) {
                           return DropdownMenuItem<String>(
                             value: salutationMap[key],
-                            child: Text(key,style: TextStyle( fontFamily: 'Nunito'),),
+                            child: Text(key,style: const TextStyle( fontFamily: 'Nunito'),),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -162,6 +162,7 @@ Future<void> stage2() async {
                       decoration: InputDecoration(
                           labelText: 'First Name',
                           border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                         labelStyle: const TextStyle(
                           fontFamily: 'Nunito',
                           color: Colors.black87
@@ -184,6 +185,7 @@ Future<void> stage2() async {
                       decoration: InputDecoration(
                           labelText: 'Middle Name',
                           border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                         labelStyle: const TextStyle(
                           fontFamily: 'Nunito',
                             color: Colors.black87
@@ -206,6 +208,7 @@ Future<void> stage2() async {
                       decoration: InputDecoration(
                           labelText: 'Last Name or Initial ',
                           border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                         labelStyle: const TextStyle(
                         fontFamily: 'Nunito',
                             color: Colors.black87
@@ -228,6 +231,7 @@ Future<void> stage2() async {
                           labelText: 'Nick Name or Alias',
                           border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)
                           ),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                         labelStyle: const TextStyle(
                           fontFamily: 'Nunito',
                             color: Colors.black87
@@ -267,7 +271,7 @@ Future<void> stage2() async {
                         ),
                         child: const Text(
                           'Next',
-                          style: TextStyle(color: Colors.purple, fontFamily: 'Nunito',),
+                          style: TextStyle(color: Color(0xFF8000FF), fontFamily: 'Nunito',),
                         ),
                       ),
                     ),

@@ -63,7 +63,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Nunito',
-                          color: Color(0xFF9900FF),
+                          color: Color(0xFF8000FF),
                           // fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -101,6 +101,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
           width: 100,
           height: 35,
             child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+              ),
                 onPressed: () {
                   Navigator.push(
                     context,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:propel_login/Api%20Connection/Api.dart';
@@ -42,18 +43,6 @@ class _PDCScreenState extends State<PDCScreen> {
       email = Email ?? '';
     });
   }
-
-  // Future<void> PhoneNumber(phoneNumber) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('mobileNumber', phoneNumber);
-  //   await stage1(stage);
-  // }
-  // Future<void> checkEmail(email) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString( 'email', email);
-  //
-  //   await stage1(stage);
-  // }
   Future<void> stage1(stage) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? mobileNumber = prefs.getString('mobileNumber');
@@ -74,33 +63,22 @@ class _PDCScreenState extends State<PDCScreen> {
     print(body);
     if(body['success'] ==true) {
      var responseData = body['data'];
-     // print(responseData);
      var tempModel = responseData['tempModel'];
-     // print(tempModel);
      var tempId = tempModel['id'];
-     // print(tempId);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('tempModel', tempId);
      checkingPerson();
-     // Navigator.push(
-     //   context,
-     //   MaterialPageRoute(
-     //       builder: (context) => const NewAccount1Screen()),
-     // );
     }
   }
   Future<void> checkingPerson() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString("data");
     String? status = prefs.getString("status");
-    // String? personUid = datas['personUid'] != null ? datas['personUid'] : null;
     if (uid == null) {
-      // handle the case where uid is null
       return;
     }
     var data = {
       'uid': uid,
-
     };
     print("<___________________Input  checkingPerson Page Api __________________________>");
     var res = await CallApi().postData('personDatas', data);
@@ -128,42 +106,6 @@ class _PDCScreenState extends State<PDCScreen> {
         );
       }
     }
-
-
-  // Future<void> checkingPerson() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String uid = prefs.getString("data") ?? '';
-  //   var data = {
-  //     'uid': uid,
-  //   };
-  //   print("<___________________Input  checkingPerson Page Api __________________________>");
-  //   var res = await CallApi().postData('personDatas', data);
-  //   var body = json.decode(res.body);
-  //   print("<___________________ Output checkingPerson Api __________________________>");
-  //   print(body);
-  //   if (body['success']) {
-  //     var personData = body['data']['personData'];
-  //     if (personData['uid'] == uid) {
-  //       // ExactPerson
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MobileOtpValidation()),
-  //       );
-  //     } else {
-  //       // MappedPerson
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-  //       );
-  //     }
-  //   } else {
-  //     // FreshUser
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const NewAccount1Screen()),
-  //     );
-  //   }
-  // }
 
   @override
   void initState() {
@@ -221,7 +163,7 @@ class _PDCScreenState extends State<PDCScreen> {
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'Nunito',
-                        color: Color(0xFF9900FF),
+                        color: Color(0xFF8000FF),
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -238,43 +180,39 @@ class _PDCScreenState extends State<PDCScreen> {
             ),
           ),
               const Padding(padding: EdgeInsets.only(top: 60)),
-              Center(
-                child: Container(
-                  width: 350,
-                  height: 40,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black, //color of border
-                          width: 1, //width of border
-                        ),
-                        borderRadius: BorderRadius.circular(5)
+              SizedBox(
+                width: 300,
+                height: 40,
+                child:Center(
+                  child: TextField(
+                    readOnly: true,
+                    controller: TextEditingController(text: mobileNumbers),
+                    decoration:  InputDecoration(
+                      border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                      labelText: 'Mobile Number',
                     ),
-                   padding: const EdgeInsets.only(left: 10),
-                   child:Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(mobileNumbers,style: const TextStyle(fontSize: 16,fontFamily: 'Nunito'),),
+                    // Define an input formatter to enforce the desired condition
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[6-9]\d{0,9}$')),
+                    ],
                   ),
                 ),
               ),
               const Padding(padding: EdgeInsets.only(top: 40)),
-              Center(
-                child: Container(
-                  width: 350,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black, //color of border
-                        width: 1, //width of border
-                      ),
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  padding: const EdgeInsets.only(left: 10),
-                  child:Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(email,style: const TextStyle(fontSize: 16,fontFamily: 'Nunito'),),
+      SizedBox(
+          width: 300,
+          height: 40,
+          child: Center(
+                child: TextField(
+                  // readOnly: true,
+                  controller: TextEditingController(text: email),
+                  decoration:  InputDecoration(
+                    border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)),
+                    labelText: 'Email',
                   ),
                 ),
               ),
+      ),
               const Padding(padding: EdgeInsets.only(top: 50)),
               Center(
                 child: Column(
@@ -303,7 +241,7 @@ class _PDCScreenState extends State<PDCScreen> {
                         ),
                         const Center(
                           child:  SizedBox(
-                            width: 350,
+                            width: 250,
                             child: Text('The above details are my personal mobile number and email',style: TextStyle(fontFamily: 'Nunito'),),
                           ),
                         ),
@@ -328,7 +266,7 @@ class _PDCScreenState extends State<PDCScreen> {
                         ),
                         const Center(
                           child:  SizedBox(
-                            width: 350,
+                            width: 250,
                             child: Text('The above detail are not mine, I use or share information of '
                                 'my family member. Else I use my official, which I may hand over on my exit',style: TextStyle(fontFamily: 'Nunito')),
                           ),
@@ -412,7 +350,7 @@ class _PDCScreenState extends State<PDCScreen> {
             actions: <Widget>[
               ElevatedButton(
                 child: const Text(
-                    'Continue', style: TextStyle(fontFamily: 'Nunito')),
+                    'Continue', style: TextStyle(fontFamily: 'Nunito',color: Color(0xFF8000FF))),
                 onPressed: () {
                   Navigator.push(
                     context,

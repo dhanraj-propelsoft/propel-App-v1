@@ -35,7 +35,7 @@ class _InformationScreenState extends State<InformationScreen> {
                     style: TextStyle(
                       fontSize: 30,
                       fontFamily: 'Nunito',
-                      color: Color(0xFF9900FF),
+                      color: Color(0xFF8000FF),
                       // fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -90,14 +90,14 @@ class _InformationScreenState extends State<InformationScreen> {
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         side: const BorderSide(
-                          color: Colors.purple,
+                          color: Color(0xFF9900FF),
                           width: 2.0,
                           style: BorderStyle.solid,
                         ),
                       ),
                     ),
                   ),
-                  child: const Text('Cancel',style: TextStyle(color: Colors.purple,fontFamily: 'Nunito'),),
+                  child: const Text('Cancel',style: TextStyle(color: Color(0xFF8000FF),fontFamily: 'Nunito'),),
                 ),
               ),
               const Spacer(),
@@ -117,7 +117,7 @@ class _InformationScreenState extends State<InformationScreen> {
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           side: const BorderSide(
-                            color: Colors.purple,
+                            color: Color(0xFF9900FF),
                             width: 2.0,
                             style: BorderStyle.solid,
                           ),
@@ -127,7 +127,7 @@ class _InformationScreenState extends State<InformationScreen> {
                     ),
                     child: const Text(
                       'Continue',
-                      style: TextStyle(color: Colors.purple,fontFamily: 'Nunito',),
+                      style: TextStyle(color: Color(0xFF8000FF),fontFamily: 'Nunito',),
                     ),
                   ),
                 ),

@@ -135,7 +135,7 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontFamily: 'Nunito',
-                              color: Color(0xFF9900FF),
+                              color: Color(0xFF8000FF),
                               // fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -156,17 +156,18 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                   child: Column(
                     children: [
                      SizedBox(
-                    width: 350,
+                    width: 300,
                     height: 40,
                      child:  TextField(
                         controller: _otpController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelStyle:  TextStyle(
+                        decoration:  InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0)
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                          labelStyle:  const TextStyle(
                             fontFamily: 'Nunito',
-                            // fontStyle: FontStyle.italic,
-                            // fontWeight: FontWeight.bold,
 
                           ),
                           labelText: 'Enter OTP',
@@ -176,7 +177,7 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                   ),
                       const Padding(padding: EdgeInsets.only(top: 30)),
                       SizedBox(
-                        width: 350,
+                        width: 300,
                         height: 40,
                         child: Align(
                           alignment: Alignment.topLeft,
@@ -194,8 +195,11 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                         stream: _buttonController.stream,
                         builder: (context, snapshot) {
                           return ElevatedButton(
+                            // style: ButtonStyle(
+                            //   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+                            // ),
                             onPressed: snapshot.data ?? false ? _onSubmit : null,
-                            child: const Text('Validate',style: TextStyle(fontFamily: 'Nunito'),),
+                            child: const Text('Validate',style: TextStyle(fontFamily: 'Nunito',color: Color(0xFF8000FF)),),
                           );
                         },
                       ),

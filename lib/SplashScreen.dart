@@ -278,7 +278,7 @@ class _SplashScreenState extends State<SplashScreen>
                       fontFamily: 'Nunito',
                       fontSize: 26,
                       // fontWeight: FontWeight.bold,
-                      color: Color(0xFF9900FF),
+                      color: Color(0xFF8000FF),
                     ),
                   ),
                 ),
@@ -308,7 +308,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    // Dispose the animation controller to avoid memory leaks
     _animationController.dispose();
     super.dispose();
   }

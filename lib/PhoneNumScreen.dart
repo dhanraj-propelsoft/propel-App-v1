@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const Padding(padding: EdgeInsets.only(top: 100)),
           Center(
             child: SizedBox(
-              width: 350,
+              width: 300,
               child: TextField(
                 onTap: () {
                   showDialog(
@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const Padding(padding: EdgeInsets.only(top: 50)),
           Center(
             child: SizedBox(
-              width: 350,
+              width: 300,
               height: 40,
               child: TextFormField(
                 controller: _phoneController,
@@ -203,22 +203,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
-                    hintText: 'Enter your personal Mobile Number only',
-                    labelText: _showLabel ? 'Mobile Number *' : null,
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
+                  hintText: 'Enter your personal Mobile Number only',
+                  labelText: _showLabel ? 'Mobile Number *' : null,
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                   labelStyle: const TextStyle(
                     fontFamily: 'Nunito',
                     // fontStyle: FontStyle.italic,
                     // fontWeight: FontWeight.bold,
-
                   ),
                   hintStyle: const TextStyle(
                     fontFamily: 'Nunito',
                     // fontWeight: FontWeight.bold,
                     // fontStyle: FontStyle.italic,
-                      fontSize: 14
+                    fontSize: 14,
                   ),
                 ),
                 onChanged: (_) => _checkInput(),
@@ -233,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 40)),
           Padding(
-            padding: const EdgeInsets.only(left: 250.0),
+            padding: const EdgeInsets.only(left: 200.0),
             child: SizedBox(
               width: 100,
               height: 35,
@@ -242,14 +243,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? null
                     : () => {
                   PhoneNumber(phoneNumber )
-                          // _clearTextField(),
-                          // setState(() {
-                          //   _isButtonDisabled = true;
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => const EmailScreen()),
-                          //   );
-                          // }),
                         },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -267,13 +260,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (states.contains(MaterialState.disabled)) {
                         return Colors.white12;
                       }
-                      return Color(0xFF9900FF);
+                      return const Color(0xFF9900FF);
                     },
                   ),
                   foregroundColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.disabled)) {
-                        return Color(0xFF9900FF);
+                        return const Color(0xFF9900FF);
                       }
                       return Colors.white;
                     },
@@ -300,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
             style: TextStyle(color: Colors.black54,fontFamily: 'Nunito', fontWeight: FontWeight.bold),
           ),
           const SizedBox(
-            width: 400,
+            width: 300,
             child: Text(
               "Just enter your mobile number and follow us. We ensure your Signup for a New Account in few steps . ",
               style: TextStyle(color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold),

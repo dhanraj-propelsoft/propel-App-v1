@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           fontFamily: 'CenturySchoolbook',
-          primarySwatch: MaterialColor(0xFF8000FF, <int, Color>{
+          primarySwatch: const MaterialColor(0xFF9900FF, <int, Color>{
             50: Color(0xFFE6C6FF),
             100: Color(0xFFC19AFF),
             200: Color(0xFF9D6DFF),
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             900: Color(0xFF1C0073),
           })
       ),
-      home: SplashScreen(),
+      home:  SplashScreen(),
     );
   }
 }

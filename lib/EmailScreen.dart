@@ -140,9 +140,10 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
+      body: SingleChildScrollView(
+          child: Column(
           key: _formKey,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Padding(padding: EdgeInsets.only(top: 50)),
             Center(
@@ -163,7 +164,7 @@ class _EmailScreenState extends State<EmailScreen> {
                         style: TextStyle(
                           fontFamily: 'Nunito',
                           fontSize: 30,
-                          color: Color(0xFF9900FF),
+                          color: Color(0xFF8000FF),
                           // fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -183,7 +184,7 @@ class _EmailScreenState extends State<EmailScreen> {
             const Padding(padding: EdgeInsets.only(top: 50)),
              Center(
               child: SizedBox(
-                width: 350,
+                width: 300,
               child: Text('No credentials are fount , with your mobile number $hiddenmobileNumbers, Kindly provide email for cross verification',
               style: const TextStyle(fontFamily: 'Nunito',fontSize: 14),),
             ),
@@ -191,18 +192,19 @@ class _EmailScreenState extends State<EmailScreen> {
             const Padding(padding: EdgeInsets.only(top: 50)),
             Center(
               child: SizedBox(
-                width: 350,
+                width: 300,
                 height: 40,
                 child: TextFormField(
                   controller: _emailcontroller,
                   focusNode: _focusNode,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       hintText: 'Enter your personal Email only',
                       labelText: _showLabel ? 'Email *' : null,
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0)),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     labelStyle: const TextStyle(
                       fontFamily: 'Nunito',
                       // fontStyle: FontStyle.italic,
@@ -238,7 +240,7 @@ class _EmailScreenState extends State<EmailScreen> {
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         side: const BorderSide(
-                          color: Colors.purple,
+                          color: Color(0xFF9900FF),
                           width: 2.0,
                           style: BorderStyle.solid,
                         ),
@@ -249,13 +251,13 @@ class _EmailScreenState extends State<EmailScreen> {
                         if (states.contains(MaterialState.disabled)) {
                           return Colors.white12;
                         }
-                        return Colors.purple;
+                        return  const Color(0xFF9900FF);
                       },
                     ),
                     foregroundColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
                         if (states.contains(MaterialState.disabled)) {
-                          return Colors.purple;
+                          return  const Color(0xFF9900FF);
                         }
                         return Colors.white;
                       },
@@ -269,14 +271,13 @@ class _EmailScreenState extends State<EmailScreen> {
                       },
                     ),
                   ),
-                  child: const Text('Submit'),
+                  child: const Text('Submit'),),
                 ),
               ),
-            ),
             const Padding(padding: EdgeInsets.only(top: 50)),
             const Center(
               child: SizedBox(
-                width: 350,
+                width: 300,
                 child: Text(
                   "Kindly provide you personal and permeant email only never enter any official email which may be invalid on time..",
                   style: TextStyle(color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold,fontSize: 14),

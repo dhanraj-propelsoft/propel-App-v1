@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class PersonDataConfirmationScreen extends StatefulWidget {
   final List<Map<String, dynamic>>? personData;
-  const PersonDataConfirmationScreen({Key? key, this.personData}) : super(key: key);
+
+  const PersonDataConfirmationScreen({Key? key, this.personData})
+      : super(key: key);
 
   @override
   State<PersonDataConfirmationScreen> createState() =>
@@ -30,21 +33,28 @@ class _PersonDataConfirmationScreenState
 
   void getPersonData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List? personData = prefs.getStringList('personData')?.map((data) => json.decode(data)).toList();
+    List? personData = prefs
+        .getStringList('personData')
+        ?.map((data) => json.decode(data))
+        .toList();
     setState(() {
-      personName = '${personData![0]['firstName']} ${personData[0]['middleName']}';
+      personName =
+          '${personData![0]['firstName']} ${personData[0]['middleName']}';
       mobileId = personData[0][mobileId];
       hiddenmobileId = "${mobileId.substring(0, 3)}*****";
       emailId = personData[0][emailId];
-      emailIdcaracter = '${emailId.replaceRange(2, emailId.indexOf('@'), "*" * (emailId.indexOf('@') - 2))}@${emailId.substring(emailId.indexOf('@') + 1)}';
+      emailIdcaracter =
+          '${emailId.replaceRange(2, emailId.indexOf('@'), "*" * (emailId.indexOf('@') - 2))}@${emailId.substring(emailId.indexOf('@') + 1)}';
     });
   }
+
   // @override
   // void initState() {
   //   super.initState();
   //   getNames();
   // }
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +78,7 @@ class _PersonDataConfirmationScreenState
                   'Propel soft',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Color(0xFF9900FF),
+                    color: Color(0xFF8000FF),
                     fontFamily: 'Nunito',
                     // fontWeight: FontWeight.bold,
                   ),
@@ -102,7 +112,7 @@ class _PersonDataConfirmationScreenState
       )),
       const Center(
         child: SizedBox(
-          width: 350,
+          width: 300,
           child: Text(
             'These record are found on our system against credentials By selecting one of them you ensure its your record.',
             style: TextStyle(
@@ -110,69 +120,83 @@ class _PersonDataConfirmationScreenState
           ),
         ),
       ),
-      const Divider(endIndent: 40,indent:40),
-        Container(
-          alignment: Alignment.centerLeft,
-          child: GFCheckboxListTile(
-            title: Row(
-              children: [
-                const GFAvatar(
-                  backgroundColor: Colors.purple,
-                  child: Text(
-                    'A',
-                    style: TextStyle(color: Colors.white, fontFamily: 'Nunito'),
-                  ),
+      const Divider(endIndent: 40, indent: 40),
+      Container(
+        alignment: Alignment.centerLeft,
+        child: GFCheckboxListTile(
+          title: Row(
+            children: [
+              const GFAvatar(
+                backgroundColor: Colors.purple,
+                child: Text(
+                  'A',
+                  style: TextStyle(color: Colors.white, fontFamily: 'Nunito'),
                 ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Text(
-                       personName,
-                      style: const TextStyle(fontSize: 15,fontFamily: 'Nunito',),
-                    ),
-                    const SizedBox(height: 5),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:  [
-                        Text(
-                          hiddenmobileId,
-                          style: const TextStyle(fontSize: 12,fontFamily: 'Nunito',),
-                        ),
-                         Text(
-                           emailIdcaracter,
-                          style: const TextStyle(fontSize: 12,fontFamily: 'Nunito',),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            size: 20,
-            activeBgColor: Colors.green,
-            type: GFCheckboxType.circle,
-            activeIcon: const Icon(
-              Icons.check,
-              size: 15,
-              color: Colors.white,
-            ),
-            onChanged: (value) {
-              setState(() {
-                isChecked = value;
-              });
-            },
-            value: isChecked,
-            inactiveIcon: null,
-          ),
-        ),
-        const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: isChecked ? showConfirmationDialog : null,
-                child: const Text('Continue',style: TextStyle(fontFamily: 'Nunito')),
               ),
-            ])));
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    personName,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Nunito',
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        hiddenmobileId,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Nunito',
+                        ),
+                      ),
+                      Text(
+                        emailIdcaracter,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Nunito',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          size: 20,
+          activeBgColor: Colors.green,
+          type: GFCheckboxType.circle,
+          activeIcon: const Icon(
+            Icons.check,
+            size: 15,
+            color: Colors.white,
+          ),
+          onChanged: (value) {
+            setState(() {
+              isChecked = value;
+            });
+          },
+          value: isChecked,
+          inactiveIcon: null,
+        ),
+      ),
+      const SizedBox(height: 20),
+      ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+        ),
+        onPressed: isChecked ? showConfirmationDialog : null,
+        child: const Text('Continue', style: TextStyle(fontFamily: 'Nunito')),
+      ),
+    ])));
   }
+
   Future<void> showConfirmationDialog() async {
     return showDialog<void>(
       context: context,
@@ -182,13 +206,13 @@ class _PersonDataConfirmationScreenState
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: AlertDialog(
             title: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.red,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.red,
+                  width: 1,
                 ),
+                borderRadius: BorderRadius.circular(10),
+              ),
               padding: const EdgeInsets.all(10.0),
               child: const Center(
                 child: Text(
@@ -204,40 +228,47 @@ class _PersonDataConfirmationScreenState
             ),
             content: SingleChildScrollView(
               child: ListBody(
-                children:  <Widget>[
+                children: <Widget>[
                   SizedBox(
-                    width: 280,
-                    child:Column(
-                      children: const [
-                        Text('You are trying to access a Person DATA hence, if you the one who holds the mobile number and email kindly proceed'
-                        ,style: TextStyle(fontFamily: 'Nunito')),
-                  Text(
-                      'Do you want to make the change ?',style: TextStyle(fontFamily: 'Nunito')),],
-                    ) )
+                      width: 280,
+                      child: Column(
+                        children: const [
+                          Text(
+                              'You are trying to access a Person DATA hence, if you the one who holds the mobile number and email kindly proceed',
+                              style: TextStyle(fontFamily: 'Nunito')),
+                          Text('Do you want to make the change ?',
+                              style: TextStyle(fontFamily: 'Nunito')),
+                        ],
+                      ))
                 ],
               ),
             ),
             actions: <Widget>[
-              Row(children: [
-                OutlinedButton(
-                  child: const Text('Cancel',style: TextStyle(fontFamily: 'Nunito'),),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                const Spacer(),
-                OutlinedButton(
-                  child: const Text('Continue',style: TextStyle(fontFamily: 'Nunito')),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],)
+              Row(
+                children: [
+                  OutlinedButton(
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(fontFamily: 'Nunito'),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  const Spacer(),
+                  OutlinedButton(
+                    child: const Text('Continue',
+                        style: TextStyle(fontFamily: 'Nunito')),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              )
             ],
           ),
         );
       },
     );
   }
-
 }

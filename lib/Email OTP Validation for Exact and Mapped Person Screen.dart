@@ -70,8 +70,6 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
       var first_name = personData['first_name'];
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('personData', first_name);
-      // print(first_name);
-      // print(personData);
       Navigator.push(context, MaterialPageRoute(builder: (context) => ExactPersonScreen1(personData: personData)));
     } else {
     }
@@ -105,11 +103,6 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
     }
     void _submit() {
       emailOtpValidation();
-      // emailOTPValidation();
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const NewPasswordCreateScreen()),
-      // );
     }
     @override
     Widget build(BuildContext context) {
@@ -136,7 +129,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                               style: TextStyle(
                                 fontSize: 30,
                                 fontFamily: 'Nunito',
-                                color: Color(0xFF9900FF),
+                                color: Color(0xFF8000FF),
                                 // fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -157,21 +150,24 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                       child: Column(
                           children: [
                             SizedBox(
-                              width: 350,
+                              width: 300,
                               height: 40,
                               child:  TextField(
                                 controller: _otpController,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelStyle:  TextStyle(
+                                decoration:  InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0)
+                                  ),
+                                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                                  labelStyle:  const TextStyle(
                                     fontFamily: 'Nunito',
                                     // fontStyle: FontStyle.italic,
                                     // fontWeight: FontWeight.bold,
 
                                   ),
                                   labelText: 'Enter OTP',
-                                    hintStyle:  TextStyle(
+                                    hintStyle:  const TextStyle(
                                       fontFamily: 'Nunito',
                                       fontSize: 14,
 
@@ -186,7 +182,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                             ),
                             const Padding(padding: EdgeInsets.only(top: 30)),
                             SizedBox(
-                              width: 350,
+                              width: 300,
                               height: 40,
                               child: Align(
                                 alignment: Alignment.topLeft,
@@ -201,7 +197,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                               stream: _buttonController.stream,
                               builder: (context, snapshot) {
                                 return SizedBox(
-                                  width: 350,
+                                  width: 300,
                                   height: 40,
                                   child: Row(
                                     children: [
@@ -220,7 +216,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                                                 borderRadius: BorderRadius
                                                     .circular(8.0),
                                                 side: const BorderSide(
-                                                  color: Colors.purple,
+                                                  color: Color(0xFF9900FF),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
                                                 ),
@@ -233,7 +229,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                                                     MaterialState.disabled)) {
                                                   return Colors.white12;
                                                 }
-                                                return Colors.purple;
+                                                return const Color(0xFF9900FF);
                                               },
                                             ),
                                             foregroundColor: MaterialStateProperty
@@ -241,7 +237,7 @@ class _EmailOtpValidationExactAndMappedPersonScreenState extends State<EmailOtpV
                                                   (Set<MaterialState> states) {
                                                 if (states.contains(
                                                     MaterialState.disabled)) {
-                                                  return Colors.purple;
+                                                  return const Color(0xFF9900FF);
                                                 }
                                                 return Colors.white;
                                               },

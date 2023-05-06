@@ -103,7 +103,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+        child:Column(
           key: _formKey,
           children: [
             const Padding(padding: EdgeInsets.only(top: 50)),
@@ -125,7 +126,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Nunito',
-                          color: Color(0xFF9900FF),
+                          color: Color(0xFF8000FF),
                           // fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -149,7 +150,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             const Padding(padding: EdgeInsets.only(top: 20)),
          Center(
             child: SizedBox(
-                width: 350,
+                width: 300,
                 height: 40,
                 child: TextFormField(
                   controller: _passwordController,
@@ -164,11 +165,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           });
                         },
                         child: Icon(
-                          _obscureText ? Icons.visibility : Icons.visibility_off,
+                          _obscureText ? Icons.visibility_off : Icons.visibility,
                         ),
                       ),
                       border: OutlineInputBorder( borderRadius: BorderRadius.circular(8.0)
                       ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     labelStyle: const TextStyle(
                       fontFamily: 'Nunito',
                       // fontStyle: FontStyle.italic,
@@ -191,13 +193,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
          ),
             const Padding(padding: EdgeInsets.only(top: 50)),
             SizedBox(
-              width: 350,
+              width: 300,
               height: 40,
               child: Row(
                 children: [
                   SizedBox(
-                    // width: 130,
-                    // height: 30,
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ButtonStyle(
@@ -206,14 +206,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF9900FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
                           ),
                         ),
                       ),
-                      child: Text("I'm not $fullName",style: const TextStyle(color: Colors.purple,fontFamily: 'Nunito'),),
+                      child: Text("I'm not $fullName",style: const TextStyle(color: Color(0xFF8000FF),fontFamily: 'Nunito'),),
                     ),
                   ),
                 const Spacer(),
@@ -227,7 +227,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF9900FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
@@ -238,13 +238,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             if (states.contains(MaterialState.disabled)) {
                               return Colors.white12;
                             }
-                            return Colors.purple;
+                            return const Color(0xFF9900FF);
                           },
                         ),
                         foregroundColor: MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
                             if (states.contains(MaterialState.disabled)) {
-                              return Colors.purple;
+                              return const Color(0xFF9900FF);
                             }
                             return Colors.white;
                           },
@@ -285,6 +285,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             )
       ]
     ),
+      ),
     );
   }
 }

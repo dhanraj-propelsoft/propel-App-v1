@@ -15,19 +15,21 @@ class _PasswordCreateSuccessfulScreenState extends State<PasswordCreateSuccessfu
 
   String firstName = '';
   String middleName = '';
-  String lastName = '';
+  // String lastName = '';
 
   void getNames() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? first = prefs.getString('firstName');
     String? middle = prefs.getString('middleName');
-    String? last = prefs.getString('lastName');
+    // String? last = prefs.getString('lastName');
 
     setState(() {
       firstName = first ?? '';
       middleName = middle ?? '';
-      lastName = last ?? '';
-      fullName = '$firstName${middleName.isNotEmpty?'$middleName ' : ''}$lastName';
+      // lastName = last ?? '';
+      fullName = '$firstName${middleName.isNotEmpty?'$middleName ' : ''}';
+          // '$lastName'
+
     });
   }
 
@@ -62,7 +64,7 @@ class _PasswordCreateSuccessfulScreenState extends State<PasswordCreateSuccessfu
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Nunito',
-                          color: Color(0xFF9900FF),
+                          color: Color(0xFF8000FF),
                           // fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -100,6 +102,9 @@ class _PasswordCreateSuccessfulScreenState extends State<PasswordCreateSuccessfu
                   width: 100,
                   height: 35,
                   child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -107,7 +112,7 @@ class _PasswordCreateSuccessfulScreenState extends State<PasswordCreateSuccessfu
                               builder: (context) =>  const LoginScreen()),
                         );
                       },
-                      child: const Text('Submit',style: TextStyle(fontFamily: 'Nunito'),))
+                      child: const Text('Submit',style: TextStyle(fontFamily: 'Nunito',color: Color(0xFF8000FF)),))
               ),
             ),
           ],

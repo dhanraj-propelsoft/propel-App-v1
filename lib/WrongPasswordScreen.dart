@@ -90,7 +90,7 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body:Center(
+      body:SingleChildScrollView(child: Center(
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.only(top: 30)),
@@ -141,14 +141,14 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
              const Center(
                child:
              SizedBox(
-               width: 350,
+               width: 300,
                child: Text('Hope you bad entered wrong Password you can try again or else Reset through Forgot '
                    'Password',  style: TextStyle(fontSize: 16,color: Colors.black54,  fontFamily: 'Nunito', fontWeight: FontWeight.bold), ),
               ),
              ),
             const Padding(padding: EdgeInsets.only(top: 50)),
             SizedBox(
-              width: 350,
+              width: 300,
               height: 40,
               child: Row(
                 children: [
@@ -158,10 +158,6 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         generateEmailOTP();
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => const EmailOtpValidationScreen()),
-                        // );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -169,14 +165,14 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF9900FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
                           ),
                         ),
                       ),
-                      child: const Text("Forgot Password",style: TextStyle(color: Colors.purple,fontFamily: 'Nunito'),),
+                      child: const Text("Forgot Password",style: TextStyle(color: Color(0xFF8000FF),fontFamily: 'Nunito'),),
                     ),
                   ),
                   const Spacer(),
@@ -196,14 +192,14 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF9900FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
                           ),
                         ),
                       ),
-                      child: const Text('Try Again',style: TextStyle(color: Colors.purple,fontFamily: 'Nunito')),
+                      child: const Text('Try Again',style: TextStyle(color: Color(0xFF9900FF),fontFamily: 'Nunito')),
                     ),
                   ),
                 ],
@@ -230,6 +226,7 @@ class _WrongPasswordScreenState extends State<WrongPasswordScreen> {
             )
           ],
         ),
+      ),
       ),
     );
   }

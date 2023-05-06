@@ -138,7 +138,7 @@ class _NewPasswordCreateScreenState extends State<NewPasswordCreateScreen> {
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'Nunito',
-                        color: Color(0xFF9900FF),
+                        color: Color(0xFF8000FF),
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -156,16 +156,20 @@ class _NewPasswordCreateScreenState extends State<NewPasswordCreateScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 50)),
           SizedBox(
-            width: 350,
+            width: 300,
             height: 40,
             child: TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+              decoration:  InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0)
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                 labelText: 'Enter new Password',
-                labelStyle:  TextStyle(
+                labelStyle:  const TextStyle(
                   fontFamily: 'Nunito',
+
                   // fontStyle: FontStyle.italic,
                   // fontWeight: FontWeight.bold,
 
@@ -175,13 +179,16 @@ class _NewPasswordCreateScreenState extends State<NewPasswordCreateScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 30)),
           SizedBox(
-            width: 350,
+            width: 300,
             height: 40,
             child: TextField(
               controller: _confirmPasswordController,
               obscureText: !_isConfirmPasswordVisible,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0)
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                 labelText: 'Confirm Password',
                 labelStyle: const TextStyle(
                   fontFamily: 'Nunito',
@@ -209,6 +216,9 @@ class _NewPasswordCreateScreenState extends State<NewPasswordCreateScreen> {
                 );
               }
               return ElevatedButton(
+                // style: ButtonStyle(
+                //   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+                // ),
                 onPressed: snapshot.data ?? false ? _onSubmit : null,
                 child: const Text('Submit',style: TextStyle(fontFamily: 'Nunito'),),
               );

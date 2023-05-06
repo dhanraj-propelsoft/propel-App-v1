@@ -121,7 +121,7 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                           'Propel soft',
                           style: TextStyle(
                             fontSize: 30,
-                            color: Color(0xFF9900FF),
+                            color: Color(0xFF8000FF),
                             fontFamily: 'Nunito',
                             // fontWeight: FontWeight.bold,
                           ),
@@ -144,10 +144,10 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                   width: 300,
                   height: 40,
                   decoration: BoxDecoration(
-                    // border: Border.all(
-                    //   color: Colors.black,
-                    //   width: 1,
-                    // ),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   padding: const EdgeInsets.only(left: 10),
@@ -180,10 +180,10 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                   width: 300,
                   height: 40,
                   decoration: BoxDecoration(
-                    // border: Border.all(
-                    //   color: Colors.black,
-                    //   width: 1,
-                    // ),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   padding: const EdgeInsets.only(left: 10),
@@ -217,7 +217,7 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                   height: 40,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.grey,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(5),
@@ -260,7 +260,7 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: const BorderSide(
-                              color: Colors.purple,
+                              color: Color(0xFF9900FF),
                               width: 2.0,
                               style: BorderStyle.solid,
                             ),
@@ -271,7 +271,7 @@ class _ExactPersonScreen2State extends State<ExactPersonScreen2> {
                       ),
                       child: const Text(
                         'Next',
-                        style: TextStyle(color: Colors.purple,
+                        style: TextStyle(color: Color(0xFF9900FF),
                           fontFamily: 'Nunito',),
                       ),
                     ),

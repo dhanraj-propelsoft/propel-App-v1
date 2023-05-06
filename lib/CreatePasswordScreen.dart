@@ -100,12 +100,6 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
     createPassword(password);
   }
 
-  // void _togglePasswordVisibility() {
-  //   setState(() {
-  //     _isPasswordVisible = !_isPasswordVisible;
-  //   });
-  // }
-
   void _toggleConfirmPasswordVisibility() {
     setState(() {
       _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
@@ -115,7 +109,8 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         children: [
           const Padding(padding: EdgeInsets.only(top: 50)),
           Center(
@@ -136,7 +131,7 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'Nunito',
-                        color: Color(0xFF9900FF),
+                        color: Color(0xFF8000FF),
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -154,15 +149,16 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 50)),
             SizedBox(
-              width: 350,
+              width: 300,
               height: 40,
             child: TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+              decoration:  InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
                 labelText: 'Enter new Password',
-                labelStyle:  TextStyle(
+                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                labelStyle:  const TextStyle(
                   fontFamily: 'Nunito',
                   // fontStyle: FontStyle.italic,
                   // fontWeight: FontWeight.bold,
@@ -173,14 +169,15 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 30)),
           SizedBox(
-            width: 350,
+            width: 300,
             height: 40,
             child: TextField(
               controller: _confirmPasswordController,
               obscureText: !_isConfirmPasswordVisible,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
+                border:  OutlineInputBorder(  borderRadius: BorderRadius.circular(8.0)),
                 labelText: 'Retype Password for Confirmation',
+                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                 labelStyle: const TextStyle(
                   fontFamily: 'Nunito',
                   // fontStyle: FontStyle.italic,
@@ -207,14 +204,17 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
                 );
               }
               return ElevatedButton(
+                // style: ButtonStyle(
+                //   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF9900FF)),
+                // ),
                 onPressed: snapshot.data ?? false ? _onSubmit : null,
-                child: const Text('Sign up',style: TextStyle(fontFamily: 'Nunito'),),
+                child: const Text('Sign up',style: TextStyle(fontFamily: 'Nunito',color: Color(0xFF8000FF)),),
               );
             },
           ),
           const Padding(padding: EdgeInsets.only(top: 50)),
           SizedBox(
-             width: 350,
+             width: 300,
             child: RichText(
             text: const TextSpan(
               style: TextStyle(
@@ -251,6 +251,7 @@ class _PasswordCreationScreenState extends State<PasswordCreationScreen> {
           ),
           ),
         ],
+      ),
       ),
     );
   }

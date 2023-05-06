@@ -49,8 +49,6 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
       // Store OTP in SharedPreferences
     }
     generateEmailOTP();
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: (ctx) => const EmailOtpValidationScreen()));
   }
   Future<void> resendOtp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -129,7 +127,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                             style: TextStyle(
                               fontSize: 30,
                               fontFamily: 'Nunito',
-                              color: Color(0xFF9900FF),
+                              color: Color(0xFF8000FF),
                               // fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -155,20 +153,23 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                     child: Column(
                         children: [
                           SizedBox(
-                            width: 350,
+                            width: 300,
                             height: 40,
                             child:  TextField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelStyle:  TextStyle(
+                              decoration:  InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0)
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                                labelStyle:  const TextStyle(
                                   fontFamily: 'Nunito',
                                   // fontStyle: FontStyle.italic,
                                   // fontWeight: FontWeight.bold,
 
                                 ),
-                                hintStyle:  TextStyle(
+                                hintStyle:  const TextStyle(
                                   fontFamily: 'Nunito',
                                   fontSize: 14
                                   // fontStyle: FontStyle.italic,
@@ -183,7 +184,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                           ),
                           const Padding(padding: EdgeInsets.only(top: 30)),
                           SizedBox(
-                            width: 350,
+                            width: 300,
                             height: 40,
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -198,37 +199,10 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                             stream: _buttonController.stream,
                             builder: (context, snapshot) {
                               return SizedBox(
-                                width: 350,
+                                width: 300,
                                 height: 40,
                                 child: Row(
                                   children: [
-                                    // SizedBox(
-                                    //   // width: 130,
-                                    //   // height: 30,
-                                    //   child: ElevatedButton(
-                                    //     onPressed: () {},
-                                    //     style: ButtonStyle(
-                                    //       backgroundColor: MaterialStateProperty
-                                    //           .all<Color>(Colors.white),
-                                    //       shape: MaterialStateProperty.all<
-                                    //           RoundedRectangleBorder>(
-                                    //         RoundedRectangleBorder(
-                                    //           borderRadius: BorderRadius
-                                    //               .circular(8.0),
-                                    //           side: const BorderSide(
-                                    //             color: Colors.purple,
-                                    //             width: 2.0,
-                                    //             style: BorderStyle.solid,
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //     child: Text("I'm not $fullName",
-                                    //       style: const TextStyle(
-                                    //           color: Colors.purple,
-                                    //           fontFamily: 'Nunito'),),
-                                    //   ),
-                                    // ),
                                     const Spacer(),
                                     SizedBox(
                                       width: 100,
@@ -244,7 +218,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                                               borderRadius: BorderRadius
                                                   .circular(8.0),
                                               side: const BorderSide(
-                                                color: Colors.purple,
+                                                color: Color(0xFF9900FF),
                                                 width: 2.0,
                                                 style: BorderStyle.solid,
                                               ),
@@ -257,7 +231,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                                                   MaterialState.disabled)) {
                                                 return Colors.white12;
                                               }
-                                              return Colors.purple;
+                                              return const Color(0xFF9900FF);
                                             },
                                           ),
                                           foregroundColor: MaterialStateProperty
@@ -265,7 +239,7 @@ class _MobileOtpValidationState extends State<MobileOtpValidation> {
                                                 (Set<MaterialState> states) {
                                               if (states.contains(
                                                   MaterialState.disabled)) {
-                                                return Colors.purple;
+                                                return const Color(0xFF9900FF);
                                               }
                                               return Colors.white;
                                             },

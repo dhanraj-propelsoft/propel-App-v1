@@ -108,7 +108,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
           child: Column(
               children: [
                 const Padding(padding: EdgeInsets.only(top: 50)),
@@ -130,7 +130,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontFamily: 'Nunito',
-                              color: Color(0xFF9900FF),
+                              color: Color(0xFF8000FF),
                               // fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -156,19 +156,22 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                     child: Column(
                         children: [
                           SizedBox(
-                            width: 350,
+                            width: 300,
                             height: 40,
                             child:  TextField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelStyle:  TextStyle(
+                              decoration:  InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                                labelStyle:  const TextStyle(
                                   fontFamily: 'Nunito',
                                   // fontStyle: FontStyle.italic,
                                   // fontWeight: FontWeight.bold,
                                 ),
-                                hintStyle:  TextStyle(
+                                hintStyle:  const TextStyle(
                                   fontFamily: 'Nunito',
                                   fontSize: 14,
                                   // fontStyle: FontStyle.italic,
@@ -183,7 +186,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                           ),
                           const Padding(padding: EdgeInsets.only(top: 30)),
                           SizedBox(
-                            width: 350,
+                            width: 300,
                             height: 40,
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -198,7 +201,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                             stream: _buttonController.stream,
                             builder: (context, snapshot) {
                               return SizedBox(
-                                width: 350,
+                                width: 300,
                                 height: 40,
                                 child: Row(
                                   children: [
@@ -216,16 +219,17 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                                               borderRadius: BorderRadius
                                                   .circular(8.0),
                                               side: const BorderSide(
-                                                color: Colors.purple,
+                                                color: Color(0xFF9900FF),
                                                 width: 2.0,
                                                 style: BorderStyle.solid,
                                               ),
                                             ),
                                           ),
                                         ),
+
                                         child: Text("I'm not $fullName",
                                           style: const TextStyle(
-                                              color: Colors.purple,
+                                              color: Color(0xFF8000FF),
                                               fontFamily: 'Nunito'),),
                                       ),
                                     ),
@@ -244,7 +248,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                                               borderRadius: BorderRadius
                                                   .circular(8.0),
                                               side: const BorderSide(
-                                                color: Colors.purple,
+                                                color: Color(0xFF9900FF),
                                                 width: 2.0,
                                                 style: BorderStyle.solid,
                                               ),
@@ -257,7 +261,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                                                   MaterialState.disabled)) {
                                                 return Colors.white12;
                                               }
-                                              return Colors.purple;
+                                              return const Color(0xFF9900FF);
                                             },
                                           ),
                                           foregroundColor: MaterialStateProperty
@@ -265,7 +269,7 @@ class _EmailOtpValidationScreenState extends State<EmailOtpValidationScreen> {
                                                 (Set<MaterialState> states) {
                                               if (states.contains(
                                                   MaterialState.disabled)) {
-                                                return Colors.purple;
+                                                return const Color(0xFF9900FF);
                                               }
                                               return Colors.white;
                                             },
